@@ -85,6 +85,7 @@ Project Structure
 
 Public GraphQL API
 This project uses the Countries GraphQL API to fetch data about countries. The API provides information such as country code, name, capital, continent, languages, phone code, and currency.
+Public GraphQL API used to fetch data in this project is https://countries.trevorblades.com/
 
 Acknowledgements
 •  Next.js
