@@ -58,3 +58,33 @@ a {
   left: 50%;
   transform: translate(-50%, -50%);
 }
+
+.error-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  opacity: 0.8;
+  z-index: 1500;
+  height: 100%;
+  width: 100%;
+}
+
+.filters-container {
+  display: flex;
+  flex-direction: row;
+  column-gap: 24px;
+  padding: 24px;
+  width: 100%;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.filter-text-field {
+  flex: 0 1 35%;
+  height: 56px;
+}
+
+.filter-button {
+  flex: 0 1 30%;
+  height: 56px;
+}
