@@ -6,6 +6,8 @@ import {
   Select,
   MenuItem,
   SelectChangeEvent,
+  FormControl,
+  InputLabel,
 } from "@mui/material";
 
 import COUNTRY_CODES from "@/constants/country-codes.json";
@@ -15,6 +17,13 @@ import { GET_COUNTRIES } from "@/queries/getCountries";
 import { NO_COUNTRY_FOUND } from "@/constants/common.constants";
 import { Country } from "@/types/country.types";
 import CountryCard from "@/components/country_card/CountryCard";
+
+const OPTIONS_INLINE_STYLES = {
+  fontFamily: `"Roboto", "Ubuntu", "sans-serif"`,
+  fontSize: "18px",
+  fontWeight: "500",
+  color: "#535353",
+};
 
 const Countries = () => {
   const [filter, setFilter] = useState<{
@@ -90,52 +99,64 @@ const Countries = () => {
   return (
     <div className="countries-container">
       <div className="filters-container">
-        <Select
-          className="filter-select-field"
-          id="select-code"
-          value={filter?.code}
-          label="Country Code"
-          name="code"
-          onChange={handleFilterChange}
-          inputProps={{ MenuProps: { disableScrollLock: true } }}
-        >
-          <MenuItem
-            className="options"
-            disabled
-            key={"select-code-option"}
-            value={"select"}
+        <FormControl className="filter-select-field">
+          <InputLabel id="select-code-label">Country Code</InputLabel>
+          <Select
+            labelId="select-code-label"
+            id="select-code"
+            label="Country Code"
+            name="code"
+            value={filter?.code}
+            onChange={handleFilterChange}
+            inputProps={{ MenuProps: { disableScrollLock: true } }}
           >
-            Select
-          </MenuItem>
-          {COUNTRY_CODES?.map((code, index) => (
-            <MenuItem className="options" value={code} key={`${index}-${code}`}>
-              {code}
+            <MenuItem
+              key="select-code-option"
+              value="select"
+              sx={OPTIONS_INLINE_STYLES}
+            >
+              Select
             </MenuItem>
-          ))}
-        </Select>
-        <Select
-          className="filter-select-field"
-          id="select-currency"
-          value={filter?.currency}
-          label="Country currency"
-          name="currency"
-          onChange={handleFilterChange}
-          inputProps={{ MenuProps: { disableScrollLock: true } }}
-        >
-          <MenuItem
-            className="options"
-            disabled
-            key={"select-currency-option"}
-            value={"select"}
+            {COUNTRY_CODES?.map((code, index) => (
+              <MenuItem
+                value={code}
+                key={`${index}-${code}`}
+                sx={OPTIONS_INLINE_STYLES}
+              >
+                {code}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+        <FormControl className="filter-select-field">
+          <InputLabel id="select-currency-label">Country Currency</InputLabel>
+          <Select
+            labelId="select-currency-label"
+            id="select-currency"
+            label="Country Currency"
+            name="currency"
+            value={filter?.currency}
+            onChange={handleFilterChange}
+            inputProps={{ MenuProps: { disableScrollLock: true } }}
           >
-            Select
-          </MenuItem>
-          {CURRENCY_CODES?.map((code, index) => (
-            <MenuItem className="options" value={code} key={`${index}-${code}`}>
-              {code}
+            <MenuItem
+              key="select-currency-option"
+              value="select"
+              sx={OPTIONS_INLINE_STYLES}
+            >
+              Select
             </MenuItem>
-          ))}
-        </Select>
+            {CURRENCY_CODES?.map((code, index) => (
+              <MenuItem
+                value={code}
+                key={`${index}-${code}`}
+                sx={OPTIONS_INLINE_STYLES}
+              >
+                {code}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
         <Button
           className="filter-button"
           variant="contained"
