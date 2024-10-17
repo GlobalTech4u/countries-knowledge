@@ -151,11 +151,4 @@ body {
     font-weight: var(--font-weight-normal);
     color: var(--font-color-gray);
   }
-
-  .options {
-    font-family: var(--font-primary);
-    font-size: var(--font-size-medium);
-    font-weight: var(--font-weight-normal);
-    color: var(--font-color-gray);
-  }
 }
