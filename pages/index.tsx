@@ -69,6 +69,18 @@ const Home = () => {
     });
   };
 
+  const handleClearFilters = () => {
+    setFilter({ code: "", currency: "" });
+    fetchCountries({
+      variables: {
+        filter: {
+          code: undefined,
+          currency: undefined,
+        },
+      },
+    });
+  };
+
   if (error || lazyError) {
     return (
       <div className="error-wrapper">
@@ -85,14 +97,14 @@ const Home = () => {
           name="code"
           onChange={handleFilterChange}
           className="filter-text-field"
-          defaultValue={filter?.code}
+          value={filter?.code}
         />
         <TextField
           label="Currency"
           name="currency"
           onChange={handleFilterChange}
           className="filter-text-field"
-          defaultValue={filter?.currency}
+          value={filter?.currency}
         />
         <Button
           className="filter-button"
@@ -100,6 +112,13 @@ const Home = () => {
           onClick={handleFilterSubmit}
         >
           Filter
+        </Button>
+        <Button
+          className="filter-button"
+          variant="contained"
+          onClick={handleClearFilters}
+        >
+          Clear Filters
         </Button>
       </div>
       <Grid container spacing={3}>
