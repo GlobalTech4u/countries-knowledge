@@ -1,4 +1,4 @@
-import { ApolloProvider, useQuery } from "@apollo/client";
+import { ApolloProvider, useQuery, useLazyQuery } from "@apollo/client";
 import client from "../lib/apolloClient";
 import { GET_COUNTRIES } from "../queries/getCountries";
 import {
@@ -7,8 +7,11 @@ import {
   CardMedia,
   Typography,
   Grid,
+  TextField,
+  Button,
   CircularProgress,
 } from "@mui/material";
+import { useState, useEffect } from "react";
 
 interface Country {
   code: string;
@@ -20,51 +23,130 @@ interface Country {
   languages: {
     name: string;
   }[];
+  phone: string;
+  currency: string;
 }
 
 const Home = () => {
+  const [filter, setFilter] = useState<{
+    code?: string;
+    currency?: string;
+  }>({});
+  const [filteredCountries, setFilteredCountries] = useState<Country[]>([]);
   const { loading, error, data } = useQuery<{ countries: Country[] }>(
     GET_COUNTRIES
   );
+  const [
+    fetchCountries,
+    { loading: lazyLoading, error: lazyError, data: lazyData },
+  ] = useLazyQuery<{ countries: Country[] }>(GET_COUNTRIES);
 
-  if (error) return <p>Error: {error.message}</p>;
+  useEffect(() => {
+    if (data) {
+      setFilteredCountries(data.countries);
+    }
+  }, [data]);
+
+  useEffect(() => {
+    if (lazyData) {
+      setFilteredCountries(lazyData.countries);
+    }
+  }, [lazyData]);
+
+  const handleFilterChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFilter((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleFilterSubmit = () => {
+    fetchCountries({
+      variables: {
+        filter: {
+          code: filter.code ? { regex: filter.code } : undefined,
+          currency: filter.currency ? { regex: filter.currency } : undefined,
+        },
+      },
+    });
+  };
+
+  if (error || lazyError) {
+    return (
+      <div className="error-wrapper">
+        Error: {error?.message || lazyError?.message}
+      </div>
+    );
+  }
 
   return (
-    <Grid container spacing={3}>
-      {loading && (
-        <div className="spinner-wrapper">
-          <CircularProgress className="spinner" />
-        </div>
-      )}
-      {!loading &&
-        data?.countries.map((country) => (
-          <Grid item xs={12} sm={6} md={4} key={country.code}>
-            <Card>
-              <CardMedia
-                component="img"
-                height="140"
-                image={`https://flagcdn.com/w320/${country.code.toLowerCase()}.png`}
-                alt={`${country.name} flag`}
-              />
-              <CardContent>
-                <Typography variant="h5" component="div">
-                  {country.name}
-                </Typography>
-                <Typography variant="body2" color="text.secondary">
-                  Capital: {country.capital}
-                </Typography>
-                <Typography variant="body2" color="text.secondary">
-                  Continent: {country.continent.name}
-                </Typography>
-                <Typography variant="body2" color="text.secondary">
-                  Languages:{" "}
-                  {country.languages.map((lang) => lang.name).join(", ")}
-                </Typography>
-              </CardContent>
-            </Card>
-          </Grid>
-        ))}
-    </Grid>
+    <div>
+      <div className="filters-container">
+        <TextField
+          label="Country Code"
+          name="code"
+          onChange={handleFilterChange}
+          className="filter-text-field"
+          defaultValue={filter?.code}
+        />
+        <TextField
+          label="Currency"
+          name="currency"
+          onChange={handleFilterChange}
+          className="filter-text-field"
+          defaultValue={filter?.currency}
+        />
+        <Button
+          className="filter-button"
+          variant="contained"
+          onClick={handleFilterSubmit}
+        >
+          Filter
+        </Button>
+      </div>
+      <Grid container spacing={3}>
+        {loading || lazyLoading ? (
+          <div className="spinner-wrapper">
+            <CircularProgress className="spinner" />
+          </div>
+        ) : (
+          filteredCountries.map((country) => (
+            <Grid item xs={12} sm={6} md={4} key={country.code}>
+              <Card>
+                <CardMedia
+                  component="img"
+                  height="140"
+                  image={`https://flagcdn.com/w320/${country.code.toLowerCase()}.png`}
+                  alt={`${country.name} flag`}
+                />
+                <CardContent>
+                  <Typography variant="h5" component="div">
+                    {country.name}
+                  </Typography>
+                  <Typography variant="body2" color="text.secondary">
+                    Code: {country.code}
+                  </Typography>
+                  <Typography variant="body2" color="text.secondary">
+                    Capital: {country.capital}
+                  </Typography>
+                  <Typography variant="body2" color="text.secondary">
+                    Continent: {country.continent.name}
+                  </Typography>
+                  <Typography variant="body2" color="text.secondary">
+                    Languages:{" "}
+                    {country.languages.map((lang) => lang.name).join(", ")}
+                  </Typography>
+                  <Typography variant="body2" color="text.secondary">
+                    Phone: {country.phone}
+                  </Typography>
+                  <Typography variant="body2" color="text.secondary">
+                    Currency: {country.currency}
+                  </Typography>
+                </CardContent>
+              </Card>
+            </Grid>
+          ))
+        )}
+      </Grid>
+    </div>
   );
 };
 
