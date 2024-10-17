@@ -1,6 +1,11 @@
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@font-face {
+  font-family: "Roboto";
+  src: url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
+}
+
+@font-face {
+  font-family: "Ubuntu";
+  src: url("https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap");
 }
 
 @media (prefers-color-scheme: dark) {
@@ -16,23 +21,10 @@ body {
   overflow-x: hidden;
 }
 
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
 * {
   box-sizing: border-box;
   padding: 0;
   margin: 0;
-}
-
-a {
-  color: inherit;
-  text-decoration: none;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -41,58 +33,129 @@ a {
   }
 }
 
-.spinner-wrapper {
-  position: fixed;
-  top: 0;
-  left: 0;
-  opacity: 0.8;
-  z-index: 1500;
-  height: 100%;
-  width: 100%;
-  background-color: #5b5858;
+body {
+  color: var(--foreground);
+  background: var(--background);
+  font-family: var(--font-primary);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-.spinner {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
-
-.error-wrapper {
-  position: fixed;
-  top: 0;
-  left: 0;
-  opacity: 0.8;
-  z-index: 1500;
-  height: 100%;
-  width: 100%;
-}
-
-.filters-container {
+.countries-container {
   display: flex;
-  flex-direction: row;
-  column-gap: 24px;
+  flex-direction: column;
+  row-gap: 24px;
   padding: 24px;
-  width: 100%;
-  align-items: center;
-  justify-content: space-around;
-}
 
-.filter-text-field {
-  flex: 0 1 35%;
-  height: 56px;
-}
+  .spinner-wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    opacity: 0.8;
+    z-index: 1500;
+    height: 100%;
+    width: 100%;
+    background-color: #5b5858;
+  }
 
-.filter-button {
-  flex: 0 1 30%;
-  height: 56px;
-}
+  .spinner {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
 
-.no-country-found-error {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  padding: 24px;
+  .error-wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    opacity: 0.8;
+    z-index: 1500;
+    height: 100%;
+    width: 100%;
+  }
+
+  .filters-container {
+    display: flex;
+    flex-direction: row;
+    column-gap: 24px;
+    padding: 24px 0;
+    width: 100%;
+    align-items: center;
+    justify-content: space-around;
+  }
+
+  .filter-select-field {
+    flex: 0 1 35%;
+    height: 56px;
+  }
+
+  .filter-button {
+    flex: 0 1 30%;
+    height: 56px;
+  }
+
+  .no-country-found-error {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    padding: 24px;
+  }
+
+  .card-content {
+    text-align: center;
+  }
+
+  .country-details-container {
+    display: flex;
+    flex-direction: column;
+    row-gap: 8px;
+    padding-top: 24px;
+  }
+
+  .country-details {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    column-gap: 8px;
+  }
+
+  .country-name {
+    font-family: var(--font-primary);
+    font-size: var(--font-size-large);
+    font-weight: var(--font-weight-semi-bold);
+    color: var(--font-color-gray);
+  }
+
+  .country-details-label {
+    font-family: var(--font-primary);
+    font-size: var(--font-size-small);
+    color: var(--font-color-gray);
+  }
+
+  .country-details-value {
+    font-family: var(--font-primary);
+    font-size: var(--font-size-small);
+    color: var(--font-color-gray);
+  }
+
+  .MuiButton-containedPrimary {
+    font-family: var(--font-primary);
+    font-size: var(--font-size-medium);
+  }
+
+  .MuiOutlinedInput-input {
+    font-family: var(--font-primary);
+    font-size: var(--font-size-medium);
+    font-weight: var(--font-weight-normal);
+    color: var(--font-color-gray);
+  }
+
+  .options {
+    font-family: var(--font-primary);
+    font-size: var(--font-size-medium);
+    font-weight: var(--font-weight-normal);
+    color: var(--font-color-gray);
+  }
 }
