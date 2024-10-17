@@ -17,6 +17,11 @@ import { GET_COUNTRIES } from "@/queries/getCountries";
 import { NO_COUNTRY_FOUND } from "@/constants/common.constants";
 import { Country } from "@/types/country.types";
 import CountryCard from "@/components/country_card/CountryCard";
+import {
+  BUTTON_LABELS,
+  COUNTRY_CODE_FILTER_LABEL,
+  COUNTRY_CURRENCY_FILTER_LABEL,
+} from "@/constants/label.constants";
 
 const OPTIONS_INLINE_STYLES = {
   fontFamily: `"Roboto", "Ubuntu", "sans-serif"`,
@@ -100,11 +105,13 @@ const Countries = () => {
     <div className="countries-container">
       <div className="filters-container">
         <FormControl className="filter-select-field">
-          <InputLabel id="select-code-label">Country Code</InputLabel>
+          <InputLabel id="select-code-label">
+            {COUNTRY_CODE_FILTER_LABEL}
+          </InputLabel>
           <Select
             labelId="select-code-label"
             id="select-code"
-            label="Country Code"
+            label={COUNTRY_CODE_FILTER_LABEL}
             name="code"
             value={filter?.code}
             onChange={handleFilterChange}
@@ -129,11 +136,13 @@ const Countries = () => {
           </Select>
         </FormControl>
         <FormControl className="filter-select-field">
-          <InputLabel id="select-currency-label">Country Currency</InputLabel>
+          <InputLabel id="select-currency-label">
+            {COUNTRY_CURRENCY_FILTER_LABEL}
+          </InputLabel>
           <Select
             labelId="select-currency-label"
             id="select-currency"
-            label="Country Currency"
+            label={COUNTRY_CURRENCY_FILTER_LABEL}
             name="currency"
             value={filter?.currency}
             onChange={handleFilterChange}
@@ -162,14 +171,14 @@ const Countries = () => {
           variant="contained"
           onClick={handleFilterSubmit}
         >
-          Filter
+          {BUTTON_LABELS.FILTER}
         </Button>
         <Button
           className="filter-button"
           variant="contained"
           onClick={handleClearFilters}
         >
-          Clear Filters
+          {BUTTON_LABELS.CLEAR_FILTERS}
         </Button>
       </div>
       <Grid container spacing={3}>
