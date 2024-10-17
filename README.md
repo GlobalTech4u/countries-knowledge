@@ -50,9 +50,10 @@ npm install
 yarn install
 
 1.
-Create a .env.local file in the root of your project and add the GraphQL API URL:
+Create a .env.local file in the root of your project and add the GraphQL API URL along with flag url:
 
 NEXT_PUBLIC_GRAPHQL_API_URL=https://countries.trevorblades.com/
+NEXT_PUBLIC_COUNTRY_FLAG_URL="https://flagcdn.com/w320/"
 
 Running the Application
 To run the application in development mode:
