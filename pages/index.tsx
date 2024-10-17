@@ -12,6 +12,7 @@ import {
   CircularProgress,
 } from "@mui/material";
 import { useState, useEffect } from "react";
+import { NO_COUNTRY_FOUND } from "@/constants/common.constants";
 
 interface Country {
   code: string;
@@ -163,6 +164,11 @@ const Home = () => {
               </Card>
             </Grid>
           ))
+        )}
+        {filteredCountries?.length <= 0 && (
+          <div className="no-country-found-error">
+            <span>{NO_COUNTRY_FOUND}</span>
+          </div>
         )}
       </Grid>
     </div>
